@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  arbitrum:
+    image: offchainlabs/nitro-node:v3.2.1-d81324d
+    container_name: arbitrum-node
+    restart: unless-stopped
+    volumes:
+      - /data/arbitrum:/home/user/.arbitrum
+    ports:
+      - "8547:8547"
+      - "8548:8548"
+    command:
+      - --init.latest
+      - pruned
+      - --parent-chain.blob-client.beacon-url=https://eth2-beacon-mainnet.nodereal.io/v1/a896e98c81914f7ab7ffb0ce9c6327b0
+      - --parent-chain.connection.url=http://10.0.9.117:8545
+      - --chain.id=42161
+      - --http.api=net,web3,eth
+      - --http.corsdomain=*
+      - --http.addr=0.0.0.0
+      - --http.vhosts=*
+    deploy:
+      resources:
+        limits:
+          memory: 12G
+        reservations:
+          memory: 12G
